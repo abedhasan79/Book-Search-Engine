@@ -54,7 +54,7 @@ const resolvers = {
             if(context.user){
                 const saveBK = await User.findOneAndUpdate(
                     {_id: context.user._id},
-                    {$push:{savedBooks: input}},
+                    {$addToSet:{savedBooks: input}},
                     {new: true},
                 );
                 return saveBK;
