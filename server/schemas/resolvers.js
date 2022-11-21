@@ -31,8 +31,8 @@ const resolvers = {
 
         },
 
-        addUser: async (parent, { username, email, password }) => {
-            const user = await User.create({ username, email, password });
+        addUser: async (parent, args) => {
+            const user = await User.create(args);
             const token = signToken(user);
             return { token, user };
         },
@@ -54,8 +54,8 @@ const resolvers = {
             if(context.user){
                 const saveBK = await User.findOneAndUpdate(
                     {_id: context.user._id},
-                    {$addToSet:{savedBooks: input}},
-                    {new: true, runValidators:true},
+                    {$push:{savedBooks: input}},
+                    {new: true},
                 );
                 return saveBK;
             }
