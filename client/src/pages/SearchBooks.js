@@ -162,7 +162,7 @@ import { saveBookIds, getSavedBookIds } from '../utils/localStorage'
 // importing our apollo hooks and the mutations 
 import { SAVE_BOOK } from '../utils/mutations'
 import { useMutation } from '@apollo/react-hooks'
-import {  searchGoogleBooks } from '../utils/API';
+
 const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([])
   const [searchInput, setSearchInput] = useState('')
@@ -182,9 +182,9 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await searchGoogleBooks(searchInput);
+      const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchInput}`);
 
-      if (!response.ok) {
+      if (!response) {
         throw new Error('something went wrong!');
       }
 
